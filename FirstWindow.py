@@ -11,7 +11,7 @@ class StartUpWindow():
     flags = pygame.OPENGL
     DISPLAYSURF = pygame.display.set_mode((400, 300), flags, vsync=1)
     pygame.display.set_caption('The Game')
-    # test
+    #
     # WHITE = (255, 255, 255)
     # catImg = pygame.image.load((os.path.join(dirname, 'Resources/Pictures/Background/ToiletMan.png')))
     # Image.open(os.path.join(dirname, 'Resources/Pictures/Background/ToiletMan.png'))
