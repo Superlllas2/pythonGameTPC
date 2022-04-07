@@ -1,4 +1,8 @@
-print("Hello world!")
-print('Hello mother Russia')
-print('New branch')
-print('Notebook')
+from FirstWindow import StartUpWindow
+
+
+def Start():
+    print("Main started")
+
+if __name__ == "__main__":
+    StartUpWindow()
