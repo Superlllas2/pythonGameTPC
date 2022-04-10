@@ -1,28 +1,23 @@
-import pygame, sys
+import pygame
 from pygame.locals import *
-import os
-from PIL import Image
 
 
-class StartUpWindow():
-    # dirname = os.path.dirname(__file__)
-
+class GameWindow:
+    # Initiates the pygame library. THIS LINE IS NEEDED IN EVERY NEW CLASS!!!
     pygame.init()
-    flags = pygame.OPENGL
-    DISPLAYSURF = pygame.display.set_mode((400, 300), flags, vsync=1)
-    pygame.display.set_caption('The Game')
-    #
-    # WHITE = (255, 255, 255)
-    # catImg = pygame.image.load((os.path.join(dirname, 'Resources/Pictures/Background/ToiletMan.png')))
-    # Image.open(os.path.join(dirname, 'Resources/Pictures/Background/ToiletMan.png'))
-    # catx = 10
-    # caty = 10
-    # direction = 'right'
+
+    # Setting up the screen size
+    screen_width = 220
+    screen_height = 183
+
+    # Setting up the window with dimensions and its caption
+    screen = pygame.display.set_mode((screen_width, screen_height))
+    pygame.display.set_caption('Platformer')
+
+    # Setting up the picture to use
+    backgroundImg = pygame.image.load('Resources/Pictures/Background/Trololo.png')
+
+    # Draw one image onto another. In our case it is drawing the Trololo image onto literally nothing
+    screen.blit(backgroundImg, (0, 0))
 
 
-    while True:
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-        pygame.display.set_mode()
