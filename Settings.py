@@ -1,6 +1,6 @@
-vertical_tile_number = 20
+vertical_tile_number = 21
 tile_size = 64
 
 # Setting up the screen size
 screen_height = vertical_tile_number * tile_size
-screen_width = 1800
+screen_width = 1000
