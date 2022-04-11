@@ -1,7 +1,9 @@
 import pygame
 import GameSettings
+import os
 
-if __name__ == "__main__":
+
+def main():
     # Boolean statement in order to run the code unless we equate it to False
     run = True
 
