@@ -5,12 +5,12 @@ An open source repository for TPC project class
 # Our roaster:
 1) Ilia Nevrov - Senior Game Developer
 2) Yessen Otegen - Middle Game Developer
-3) Konstantin Zluckyh - Game Tester
-4) ... - Product manager
-5) ... - Designer
-6) ...
-7) ...
-8) ...
+3) ... - Game Developer
+4) ... - Sound Developer
+5) ... - Game Designer
+6) ... - Game artist
+7) ... - Game Tester
+8) ... - Sound Engineer
 
 # What do you need to run the code:
 1) Donwload the Python itself
@@ -21,4 +21,6 @@ An open source repository for TPC project class
 # Dependencies:
 1) Pygame
 
+# Credits:
+1) Konstantin Zluckyh - Former Game Tester
     
