@@ -3,8 +3,8 @@
  <editorsettings>
   <export format="csv"/>
  </editorsettings>
- <tileset firstgid="1" name="YesYesYes" tilewidth="64" tileheight="64" tilecount="4" columns="2">
-  <image source="../../Pictures/Background/YesYesYes.png" width="128" height="128"/>
+ <tileset firstgid="1" name="Ground" tilewidth="64" tileheight="64" tilecount="4" columns="2">
+  <image source="../../Pictures/Background/Ground.png" width="128" height="128"/>
  </tileset>
  <layer id="1" name="Ground" width="30" height="20">
   <data encoding="csv">
