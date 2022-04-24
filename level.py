@@ -1,5 +1,5 @@
 import pygame
-from Tiles import Tile, StaticTile
+from Tiles import StaticTile
 from Settings import tile_size
 from LevelSupport import import_csv_layout, import_cut_graphics
 

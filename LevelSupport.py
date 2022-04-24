@@ -2,6 +2,7 @@ from csv import reader
 import pygame
 from Settings import tile_size
 
+
 def import_csv_layout(path):
     terrain_map = []
     with open(path) as map:
@@ -10,7 +11,8 @@ def import_csv_layout(path):
             terrain_map.append(list(row))
         return terrain_map
 
-    # With this method, we are calculating how many tiles we are having from textures map
+
+# With this method, we are calculating how many tiles we are having from textures map
 def import_cut_graphics(path):
     pygame.init()
     surface = pygame.image.load(path).convert_alpha()
