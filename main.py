@@ -29,26 +29,24 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                    moving_right = True
-                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                    moving_left = True
-                if event.key == pygame.K_UP or event.key == pygame.K_w:
-                    moving_up == True
-                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                    moving_down = True
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                    moving_right = False
-                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                    moving_left = False
-                if event.key == pygame.K_UP or event.key == pygame.K_w:
-                    moving_up = False
-                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                    moving_down = False
-
-
+            # if event.type == pygame.KEYDOWN:
+            #     if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+            #         moving_right = True
+            #     if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+            #         moving_left = True
+            #     if event.key == pygame.K_UP or event.key == pygame.K_w:
+            #         moving_up == True
+            #     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+            #         moving_down = True
+            # if event.type == pygame.KEYUP:
+            #     if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+            #         moving_right = False
+            #     if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+            #         moving_left = False
+            #     if event.key == pygame.K_UP or event.key == pygame.K_w:
+            #         moving_up = False
+            #     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+            #         moving_down = False
         screen.fill('black')
         # We start the game
         level.run()
