@@ -10,6 +10,7 @@ class Tile(pygame.sprite.Sprite):
     def update(self, shift):
         self.rect.x += shift
 
+
 class StaticTile(Tile):
     def __init__(self, size, x, y, surface):
         super().__init__(size, x, y)

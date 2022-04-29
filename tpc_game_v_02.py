@@ -4,38 +4,53 @@ import math
 # 1. Write code for collision use the algebric midpoint
 # 2. Write code for bullet
 # 3. Create the wall which rocket can't pass
-# 4. Add physics of inertion, stoping is too fast
+# 4. Add physics of inertion, stopping is too fast
 # 5. Write the classes for player
 
 pygame.init()
 running = True
 screen = pygame.display.set_mode((800, 600))
 
-rocketIMG = pygame.image.load('rocket.png')
+rocketIMG = pygame.image.load('Resources/Pictures/Character/rocket.png')
 rocketX = 270
 rocketY = 250
 r_changeX = 0
 r_changeY = 0
 
-#rocket2
-ufoIMG = pygame.image.load('ufo.png')
+# Rocket2
+ufoIMG = pygame.image.load('Resources/Pictures/Background/ufo.png')
 ufoX = 470
 ufoY = 250
 u_changeX = 0
 u_changeY = 0
 
-#wall
-wall_img = pygame.image.load('wall.png')
+# Wall
+wall_img = pygame.image.load('Resources/Pictures/Background/Ground.png')
 wallX = 64
 wallY = 250
 
+
+class Rocket(pygame.sprite.Sprite):
+
+    def __init__(self, surface):
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = surface
+
+        self.rect = self.image.get_rect() # size and position
+
+
 def rocket_load(r_x, r_y):
     screen.blit(rocketIMG, (r_x, r_y))
+
+
 def ufo_load(u_x, u_y):
     screen.blit(ufoIMG, (u_x,u_y))
 
+
 def wall_load(w_x,w_y):
     screen.blit(wall_img, (w_x,w_y))
+
 
 def isCollision(rocketX, rocketY, ufoX, ufoY):
     d = math.sqrt((math.pow(rocketX - ufoX,2)) + (math.pow(rocketY - ufoY,2)))
@@ -44,12 +59,21 @@ def isCollision(rocketX, rocketY, ufoX, ufoY):
     else:
         return False
 
+
 def isWall(rocketX, rocketY, wallX, wallY):
     d = math.sqrt((math.pow(rocketX - wallX, 2)) + (math.pow(rocketY - wallY, 2)))
-    if d < 64:
-        return True
+    if d < 96:
+        if rocketX < wallX:
+            return 1
+        elif rocketX > wallX:
+            return 2
+        elif rocketY < wallY:
+            return 3
+        elif rocketY > wallY:
+            return 4
     else:
-        return False
+        return 0
+
 
 while running:
     screen.fill((100, 100, 200))
@@ -58,7 +82,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-        #ufo movement keyboard
+        # Ufo movement keyboard
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 u_changeX = -0.4
@@ -74,7 +98,7 @@ while running:
             if event.key == pygame.K_UP or pygame.K_DOWN:
                 u_changeY = 0
 
-        #rocket movement keyboard
+        # Rocket movement keyboard
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_a:
                 r_changeX = -0.4
@@ -91,7 +115,7 @@ while running:
             if event.key == pygame.K_w or pygame.K_s:
                 r_changeY = 0
 
-    #boarders of ufo
+    # Boarders of ufo
     if ufoX <= 0:
         ufoX = 0
     elif ufoX >= 736:
@@ -101,7 +125,7 @@ while running:
     elif ufoY >= 536:
         ufoY = 536
 
-    #boarders of rocket
+    # Boarders of rocket
     if rocketX <= 0:
         rocketX = 0
     elif rocketX >= 736:
@@ -112,7 +136,7 @@ while running:
     elif rocketY >= 536:
         rocketY = 536
 
-    #Cohesion
+    # Cohesion
     if ufoX == rocketX and ufoY == rocketY:
         ufoX -= +20
         rocketX -= -20
@@ -124,7 +148,7 @@ while running:
         ufoX += 10
         ufoY -= 10
 
-    #Collision
+    # Collision
     collision = isCollision(rocketX, rocketY, ufoX, ufoY)
     if collision:
         rocketX -= 10
@@ -132,10 +156,21 @@ while running:
         ufoX += 10
         ufoY -= 10
 
-    wallCall = isWall(rocketX, rocketY, wallX, wallY)
-    if wallCall:
-        rocketX = wallX +64
-        rocketY = wallY +64
+    # wallCall = isWall(rocketX, rocketY, wallX, wallY)
+    # if wallCall != 0:
+        # if wallCall == 1:
+        #     rocketX = wallX - 96
+        # if wallCall == 2:
+        #     rocketX = wallX + 96
+        # if wallCall == 3:
+        #     rocketY = wallY - 96
+        # if wallCall == 4:
+        #     rocketY = wallY + 96
+    rocket = Rocket(rocketIMG)
+    wall = Rocket(wall_img)
+    if pygame.sprite.spritecollide(rocket, pygame.sprite.AbstractGroup(wall), False):
+        print("Collision")
+
 
     ufoX += u_changeX
     ufoY += u_changeY
