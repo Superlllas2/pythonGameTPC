@@ -26,10 +26,28 @@ def events(screen, rocket):
             elif event.key == pygame.K_w:
                 rocket.mup = False
 
+    def update_bullets(screen, enemies,walls, bullets):
+        """обновление позиции пуль"""
+        bullets.update()
+        for bullet in bullets.copy():
+            if bullet.rect.bottom <= 0:
+                bullets.remove(bullet)
+        collisions = pygame.sprite.groupcollide(bullets, walls, True, False)
+        collisions = pygame.sprite.groupcollide(bullets, enemies, True, True)
 
-def update(bg_color, screen, rocket,wall):
+        # if collisions:
+        #     for inos in collisions.values():
+        #         stats.score += 10 * len(inos)
+        #     sc.image_score()
+        #     check_high_score(stats, sc)
+        #     sc.image_guns()
+        # if len(inos) == 0:
+        #     bullets.empty()
+        #     create_army(screen, inos)
+def update(bg_color, screen, rocket,walls):
     """обновление экрана"""
     screen.fill(bg_color)
-    wall.output()
+    for i in walls:
+        i.output()
     rocket.output()
     pygame.display.flip()

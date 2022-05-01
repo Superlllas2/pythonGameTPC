@@ -23,20 +23,28 @@ class Rocket(Sprite):
         """рисование игрока"""
         self.screen.blit(self.image, self.rect)
 
-    def update_rocket(self):
+    def update_rocket(self, walls):
         """обновление позиции игрока"""
+        x=self.x
+        y=self.y
         if self.mright and self.rect.right < self.screen_rect.right:
-            self.x += 0.5
+            self.x += 0.1
         if self.mleft and self.rect.left > 0:
-            self.x -= 0.5
-        if self.mup and  self.rect.top > 0:
-            self.y -= 0.5
+            self.x -= 0.1
+        if self.mup and self.rect.top > 0:
+            self.y -= 0.1
         if self.mdown and self.rect.bottom < self.screen_rect.bottom:
-            self.y += 0.5
+            self.y += 0.1
         self.rect.centerx = self.x
         self.rect.centery = self.y
+        collisions = pygame.sprite.spritecollide(self, walls, False)
+        if collisions:
+            self.rect.centerx=x
+            self.rect.centery=y
+            self.x=x
+            self.y=y
 
     def create_rocket(self):
-        """размещение пушки по центру внизу экрана"""
-        self.y = self.screen_rect.centery
-        self.x = self.screen_rect.centerx
+        """размещение пушки"""
+        self.y = 500
+        self.x = 500
