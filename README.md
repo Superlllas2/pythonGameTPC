@@ -24,3 +24,8 @@ An open source repository for TPC project class
 # Credits:
 1) Konstantin Zluckyh - Former Game Tester
     
+# Game ideas:
+1) Maze chase game
+2) Shooting for enemies in the maze
+3) ...
+
