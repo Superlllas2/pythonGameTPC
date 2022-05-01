@@ -168,7 +168,7 @@ while running:
         #     rocketY = wallY + 96
     rocket = Rocket(rocketIMG)
     wall = Rocket(wall_img)
-    if pygame.sprite.spritecollide(rocket, pygame.sprite.AbstractGroup(wall), False):
+    if pygame.sprite.spritecollide(rocket, [wall], False):
         print("Collision")
 
 
