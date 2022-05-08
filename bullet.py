@@ -12,9 +12,9 @@ class Bullet(Sprite):
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.rect.centerx = h_x
-        self.rect.centery = h_y-50
+        self.rect.centery = h_y-32
         self.x = h_x
-        self.y = h_y
+        self.y = h_y-35
         d = sqrt((h_x - m_x) ** 2 + (h_y - m_y) ** 2)
         self.d_y = 0.2 / d * (h_y - m_y)  # изменение координат
         self.d_x = 0.2 / d * (h_x - m_x)
