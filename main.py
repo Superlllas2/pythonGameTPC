@@ -2,7 +2,7 @@ import pygame, controls
 from rocket import Rocket
 from wall import Wall
 from pygame.sprite import Group
-
+from enemy import Enemy
 
 def create_walls(screen):
     walls = Group()
@@ -23,9 +23,12 @@ def run():
     walls = create_walls(screen)
 
     while True:
-        controls.events(screen, rocket)
+        if pygame.time.get_ticks()%1000==0:
+            enemies.add(Enemy(screen))
+
+        controls.events(screen, rocket, bullets)
         rocket.update_rocket(walls)
-        controls.update(bg_color, screen, rocket, walls)
+        controls.update(bg_color, screen, rocket, walls,bullets, enemies)
 
 
 run()

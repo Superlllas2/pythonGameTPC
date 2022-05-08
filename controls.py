@@ -1,8 +1,9 @@
 import pygame, sys
 from rocket import Rocket
+from bullet import Bullet
 
 
-def events(screen, rocket):
+def events(screen, rocket, bullets):
     """обработка нажатий клавиш"""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -16,6 +17,10 @@ def events(screen, rocket):
                 rocket.mdown = True
             elif event.key == pygame.K_w:
                 rocket.mup = True
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_pos = pygame.mouse.get_pos()
+            h_x, h_y = rocket.get_coor()
+            bullets.add(Bullet(screen, h_x, h_y, mouse_pos[0], mouse_pos[1]))
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_d:
                 rocket.mright = False
@@ -26,28 +31,39 @@ def events(screen, rocket):
             elif event.key == pygame.K_w:
                 rocket.mup = False
 
-    def update_bullets(screen, enemies,walls, bullets):
-        """обновление позиции пуль"""
-        bullets.update()
-        for bullet in bullets.copy():
-            if bullet.rect.bottom <= 0:
-                bullets.remove(bullet)
-        collisions = pygame.sprite.groupcollide(bullets, walls, True, False)
-        collisions = pygame.sprite.groupcollide(bullets, enemies, True, True)
+def update_bullets(screen, enemies, walls, bullets):
+    """обновление позиции пуль"""
+    bullets.update()
+    for bullet in bullets.sprites():
+        bullet.update_bullet()
+    for bullet in bullets.copy():
+        if bullet.rect.centerx <= 0 or bullet.rect.centerx > 800:
+            bullets.remove(bullet)
+        if bullet.rect.centery <= 0 or bullet.rect.centery > 600:
+            bullets.remove(bullet)
+    collisions = pygame.sprite.groupcollide(bullets, walls, True, False)
+    collisions = pygame.sprite.groupcollide(bullets, enemies, True, True)
 
-        # if collisions:
-        #     for inos in collisions.values():
-        #         stats.score += 10 * len(inos)
-        #     sc.image_score()
-        #     check_high_score(stats, sc)
-        #     sc.image_guns()
-        # if len(inos) == 0:
-        #     bullets.empty()
-        #     create_army(screen, inos)
-def update(bg_color, screen, rocket,walls):
+    # if collisions:
+    #     for inos in collisions.values():
+    #         stats.score += 10 * len(inos)
+    #     sc.image_score()
+    #     check_high_score(stats, sc)
+    #     sc.image_guns()
+    # if len(inos) == 0:
+    #     bullets.empty()
+    #     create_army(screen, inos)
+
+
+def update(bg_color, screen, rocket, walls, bullets, enemies):
     """обновление экрана"""
     screen.fill(bg_color)
+    update_bullets(screen, enemies, walls, bullets)
     for i in walls:
+        i.output()
+    for i in bullets:
+        i.output()
+    for i in enemies:
         i.output()
     rocket.output()
     pygame.display.flip()
