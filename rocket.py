@@ -48,3 +48,5 @@ class Rocket(Sprite):
         """размещение пушки"""
         self.y = 500
         self.x = 500
+    def get_coor(self):
+        return self.rect.centerx, self.rect.centery
