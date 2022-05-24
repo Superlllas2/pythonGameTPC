@@ -5,7 +5,7 @@ from pygame.sprite import Sprite
 class Rocket(Sprite):
 
     def __init__(self, screen):
-        """инициализация пушки"""
+        """Player init"""
         super(Rocket, self).__init__()
         self.screen = screen
         self.image = pygame.image.load('Resources/Pictures/Character/rocket.png')
@@ -20,11 +20,11 @@ class Rocket(Sprite):
         self.mdown = False
 
     def output(self):
-        """рисование игрока"""
+        """Player output"""
         self.screen.blit(self.image, self.rect)
 
     def update_rocket(self, walls):
-        """обновление позиции игрока"""
+        """Player position update"""
         x=self.x
         y=self.y
         if self.mright and self.rect.right < self.screen_rect.right:

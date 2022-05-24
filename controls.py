@@ -1,10 +1,9 @@
 import pygame, sys
-from rocket import Rocket
 from bullet import Bullet
 
 
 def events(screen, rocket, bullets):
-    """обработка нажатий клавиш"""
+    """Parsing pressed key"""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -32,7 +31,7 @@ def events(screen, rocket, bullets):
                 rocket.mup = False
 
 def update_bullets(screen, enemies, walls, bullets):
-    """обновление позиции пуль"""
+    """Updating bullets positions"""
     bullets.update()
     for bullet in bullets.sprites():
         bullet.update_bullet()
@@ -56,7 +55,7 @@ def update_bullets(screen, enemies, walls, bullets):
 
 
 def update(bg_color, screen, rocket, walls, bullets, enemies):
-    """обновление экрана"""
+    """Screen update"""
     screen.fill(bg_color)
     update_bullets(screen, enemies, walls, bullets)
     for i in walls:
