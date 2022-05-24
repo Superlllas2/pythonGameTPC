@@ -30,39 +30,44 @@ def events(screen, rocket, bullets):
             elif event.key == pygame.K_w:
                 rocket.mup = False
 
-def update_bullets(screen, enemies, walls, bullets):
+def update_bullets(screen,rocket, enemies, walls, bullets,enemybullets,stats):
     """Updating bullets positions"""
     bullets.update()
     for bullet in bullets.sprites():
         bullet.update_bullet()
+    for bullet in enemybullets.sprites():
+            bullet.update_bullet()
     for bullet in bullets.copy():
         if bullet.rect.centerx <= 0 or bullet.rect.centerx > 800:
             bullets.remove(bullet)
         if bullet.rect.centery <= 0 or bullet.rect.centery > 600:
             bullets.remove(bullet)
+    for bullet in enemybullets.copy():
+        if bullet.rect.centerx <= 0 or bullet.rect.centerx > 800:
+            enemybullets.remove(bullet)
+        if bullet.rect.centery <= 0 or bullet.rect.centery > 600:
+            enemybullets.remove(bullet)
     collisions = pygame.sprite.groupcollide(bullets, walls, True, False)
     collisions = pygame.sprite.groupcollide(bullets, enemies, True, True)
-
-    # if collisions:
-    #     for inos in collisions.values():
-    #         stats.score += 10 * len(inos)
-    #     sc.image_score()
-    #     check_high_score(stats, sc)
-    #     sc.image_guns()
-    # if len(inos) == 0:
-    #     bullets.empty()
-    #     create_army(screen, inos)
+    collisions = pygame.sprite.spritecollide(rocket, enemybullets, True)
+    if collisions:
+        stats.hp_left -= 1
 
 
-def update(bg_color, screen, rocket, walls, bullets, enemies):
+def update(bg_color, screen, rocket, walls, bullets,enemybullets, enemies,stats):
     """Screen update"""
     screen.fill(bg_color)
-    update_bullets(screen, enemies, walls, bullets)
+    update_bullets(screen,rocket, enemies, walls, bullets,enemybullets,stats)
+    if pygame.time.get_ticks() % 1000 == 0:
+        for i in enemies:
+            enemybullets.add(Bullet(screen, i.rect.centerx,i.rect.centery, rocket.x, rocket.y))
     for i in walls:
         i.output()
     for i in bullets:
         i.output()
     for i in enemies:
+        i.output()
+    for i in enemybullets:
         i.output()
     rocket.output()
     pygame.display.flip()

@@ -1,6 +1,6 @@
 import pygame
 from pygame.sprite import Group
-
+from stats import Stats
 import controls
 from enemy import Enemy
 from rocket import Rocket
@@ -23,19 +23,20 @@ def run():
     rocket = Rocket(screen)
     rocket.create_rocket()
     bullets = Group()
+    enemybullets=Group()
     enemies = Group()
     walls = create_walls(screen)
-
+    stats = Stats()
     while True:
-        # if pygame.time.get_ticks() % 1000 == 0:
-        if countEnemies < 7:
-            if pygame.time.get_ticks() % 1000 == 0:
-                enemies.add(Enemy(screen))
-                countEnemies += 1
-
-        controls.events(screen, rocket, bullets)
-        rocket.update_rocket(walls)
-        controls.update(bg_color, screen, rocket, walls, bullets, enemies)
+        if stats.hp_left<0:
+            pass
+        else:
+            if len(enemies) < 7:
+                if pygame.time.get_ticks() % 1000 == 0:
+                    enemies.add(Enemy(screen, walls, enemies))
+            controls.events(screen, rocket, bullets)
+            rocket.update_rocket(walls, enemies)
+            controls.update(bg_color, screen, rocket, walls, bullets,enemybullets, enemies, stats)
 
 
 run()
