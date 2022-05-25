@@ -15,8 +15,8 @@ class Bullet(Sprite):
         self.rect.centery = h_y-32
         self.x = h_x
         self.y = h_y-32
-        d = sqrt((h_x - m_x) ** 2 + (h_y - m_y) ** 2)
-        self.d_y = 0.2 / d * (h_y - m_y)    # coordinates change
+        d = sqrt((h_x - m_x) ** 2 + (h_y-32 - m_y) ** 2)
+        self.d_y = 0.2 / d * (h_y-32 - m_y)    # coordinates change
         self.d_x = 0.2 / d * (h_x - m_x)
 
     def output(self):

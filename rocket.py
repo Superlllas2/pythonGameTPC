@@ -23,7 +23,7 @@ class Rocket(Sprite):
         """Player output"""
         self.screen.blit(self.image, self.rect)
 
-    def update_rocket(self, walls):
+    def update_rocket(self, walls,enemies):
         """Player position update"""
         x=self.x
         y=self.y
@@ -43,6 +43,12 @@ class Rocket(Sprite):
             self.rect.centery=y
             self.x=x
             self.y=y
+        collisions = pygame.sprite.spritecollide(self, enemies, True)
+        if collisions:
+            self.rect.centerx = x
+            self.rect.centery = y
+            self.x = x
+            self.y = y
 
     def create_rocket(self):
         """размещение пушки"""
