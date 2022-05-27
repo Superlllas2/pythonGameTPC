@@ -34,9 +34,10 @@ def run():
         if stats.hp_left<0:
             wasted.screen.blit(wasted.image, (0,0))
             pygame.display.flip()
-            if pygame.time.get_ticks() % 1000 == 0:
-                pygame.display.quit()
-                break
+            for event in pygame.event.get():
+                if event.type==pygame.MOUSEBUTTONDOWN:
+                    pygame.display.quit()
+                    break
         else:
             if len(enemies) < 7:
                 if pygame.time.get_ticks() % 1000 == 0:

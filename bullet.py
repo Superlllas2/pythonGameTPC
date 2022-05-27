@@ -4,7 +4,7 @@ from math import sqrt
 
 
 class Bullet(Sprite):
-    def __init__(self, screen, h_x, h_y, m_x, m_y):
+    def __init__(self, screen, h_x, h_y, m_x, m_y,speed):
         """Bullet init"""
         super(Bullet, self).__init__()
         self.screen = screen
@@ -16,8 +16,8 @@ class Bullet(Sprite):
         self.x = h_x
         self.y = h_y-32
         d = sqrt((h_x - m_x) ** 2 + (h_y-32 - m_y) ** 2)
-        self.d_y = 0.2 / d * (h_y-32 - m_y)    # coordinates change
-        self.d_x = 0.2 / d * (h_x - m_x)
+        self.d_y = speed / d * (h_y-32 - m_y)    # coordinates change
+        self.d_x = speed / d * (h_x - m_x)
 
     def output(self):
         """Showing the bullet"""
