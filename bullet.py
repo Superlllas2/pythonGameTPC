@@ -8,7 +8,7 @@ class Bullet(Sprite):
         """Bullet init"""
         super(Bullet, self).__init__()
         self.screen = screen
-        self.image = pygame.image.load('Resources/Pictures/Character/Bullet2.png')
+        self.image = pygame.image.load('Resources/Pictures/Character/Bullet.png')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.rect.centerx = h_x

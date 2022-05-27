@@ -1,6 +1,6 @@
 import pygame, sys
 from bullet import Bullet
-
+from hp import Hp
 
 def events(screen, rocket, bullets):
     """Parsing pressed key"""
@@ -49,6 +49,7 @@ def update_bullets(screen,rocket, enemies, walls, bullets,enemybullets,stats):
             enemybullets.remove(bullet)
     collisions = pygame.sprite.groupcollide(bullets, walls, True, False)
     collisions = pygame.sprite.groupcollide(bullets, enemies, True, True)
+    collisions = pygame.sprite.groupcollide(enemybullets, walls, True, False)
     collisions = pygame.sprite.spritecollide(rocket, enemybullets, True)
     if collisions:
         stats.hp_left -= 1
@@ -70,4 +71,6 @@ def update(bg_color, screen, rocket, walls, bullets,enemybullets, enemies,stats)
     for i in enemybullets:
         i.output()
     rocket.output()
+    hp = Hp(screen)
+    hp.output(stats)
     pygame.display.flip()
