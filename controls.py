@@ -1,5 +1,6 @@
 import pygame, sys
 from bullet import Bullet
+from hp import Hp
 
 
 def events(screen, rocket, bullets):
@@ -19,7 +20,7 @@ def events(screen, rocket, bullets):
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = pygame.mouse.get_pos()
             h_x, h_y = rocket.get_coor()
-            bullets.add(Bullet(screen, h_x, h_y, mouse_pos[0], mouse_pos[1]))
+            bullets.add(Bullet(screen, h_x, h_y, mouse_pos[0], mouse_pos[1],0.4))
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_d:
                 rocket.mright = False
@@ -30,13 +31,14 @@ def events(screen, rocket, bullets):
             elif event.key == pygame.K_w:
                 rocket.mup = False
 
-def update_bullets(screen,rocket, enemies, walls, bullets,enemybullets,stats):
+
+def update_bullets(screen, rocket, enemies, walls, bullets, enemybullets, stats):
     """Updating bullets positions"""
     bullets.update()
     for bullet in bullets.sprites():
         bullet.update_bullet()
     for bullet in enemybullets.sprites():
-            bullet.update_bullet()
+        bullet.update_bullet()
     for bullet in bullets.copy():
         if bullet.rect.centerx <= 0 or bullet.rect.centerx > 800:
             bullets.remove(bullet)
@@ -49,18 +51,23 @@ def update_bullets(screen,rocket, enemies, walls, bullets,enemybullets,stats):
             enemybullets.remove(bullet)
     collisions = pygame.sprite.groupcollide(bullets, walls, True, False)
     collisions = pygame.sprite.groupcollide(bullets, enemies, True, True)
+    for i in collisions:
+        stats.score += 10
+    collisions = pygame.sprite.groupcollide(enemybullets, walls, True, False)
     collisions = pygame.sprite.spritecollide(rocket, enemybullets, True)
     if collisions:
         stats.hp_left -= 1
 
 
-def update(bg_color, screen, rocket, walls, bullets,enemybullets, enemies,stats):
+def update(bg_color, screen, rocket, walls, bullets, enemybullets, enemies, stats):
     """Screen update"""
     screen.fill(bg_color)
-    update_bullets(screen,rocket, enemies, walls, bullets,enemybullets,stats)
+    f1 = pygame.font.Font(None, 36) #выбор шрифта
+    text2 = f1.render(str(stats.score), False, (0, 0, 0))
+    update_bullets(screen, rocket, enemies, walls, bullets, enemybullets, stats)
     if pygame.time.get_ticks() % 1000 == 0:
         for i in enemies:
-            enemybullets.add(Bullet(screen, i.rect.centerx,i.rect.centery, rocket.x, rocket.y))
+            enemybullets.add(Bullet(screen, i.rect.centerx, i.rect.centery, rocket.x, rocket.y,0.2))
     for i in walls:
         i.output()
     for i in bullets:
@@ -70,4 +77,7 @@ def update(bg_color, screen, rocket, walls, bullets,enemybullets, enemies,stats)
     for i in enemybullets:
         i.output()
     rocket.output()
+    hp = Hp(screen)
+    hp.output(stats)
+    screen.blit(text2, (10, 10))
     pygame.display.flip()
