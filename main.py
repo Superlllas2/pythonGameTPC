@@ -5,12 +5,13 @@ import controls
 from enemy import Enemy
 from rocket import Rocket
 from wall import Wall
-from hp import Hp
+
 
 def create_walls(screen):
     walls = Group()
     walls.add(Wall(screen, 100, 100))
     walls.add(Wall(screen, 100, 132))
+    walls.add(Wall(screen,300,300))
     return walls
 
 
