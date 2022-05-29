@@ -20,7 +20,7 @@ def run():
     screen = pygame.display.set_mode((800, 600))
     pygame.display.set_caption("Game")
     wasted = Sprite()
-    wasted.image = pygame.image.load('Resources/Pictures/Character/wasted.jpg')
+    wasted.image = pygame.image.load('Resources/Pictures/Character/wasted.png')
     wasted.screen = screen
     bg_color = (100, 100, 200)
     rocket = Rocket(screen)
@@ -37,7 +37,6 @@ def run():
             for event in pygame.event.get():
                 if event.type==pygame.MOUSEBUTTONDOWN:
                     pygame.display.quit()
-                    break
         else:
             if len(enemies) < 7:
                 if pygame.time.get_ticks() % 1000 == 0:

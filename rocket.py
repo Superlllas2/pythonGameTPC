@@ -7,8 +7,16 @@ class Rocket(Sprite):
     def __init__(self, screen):
         """Player init"""
         super(Rocket, self).__init__()
+
+        self.sprites = []
+        # self.image = pygame.image.load('Resources/Pictures/Character/rocket2.png')
+        self.sprites.append(pygame.image.load('Resources/Pictures/Character/rocket2.png'))
+        self.sprites.append(pygame.image.load('Resources/Pictures/Character/rocket1.png'))
+        self.current_sprite = 0
+        self.image = self.sprites[self.current_sprite]
+
+
         self.screen = screen
-        self.image = pygame.image.load('Resources/Pictures/Character/rocket.png')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.rect.centerx = self.screen_rect.centerx
@@ -51,8 +59,12 @@ class Rocket(Sprite):
             self.y = y
             stats.hp_left -= 1
 
+        """Player animation"""
+        # self.current_sprite += 1
+        # self.image = self.sprites[self.current_sprite]
+
     def create_rocket(self):
-        """размещение пушки"""
+        """Player position"""
         self.y = 500
         self.x = 500
 

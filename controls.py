@@ -20,7 +20,7 @@ def events(screen, rocket, bullets):
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = pygame.mouse.get_pos()
             h_x, h_y = rocket.get_coor()
-            bullets.add(Bullet(screen, h_x, h_y, mouse_pos[0], mouse_pos[1],0.4))
+            bullets.add(Bullet(screen, h_x, h_y, mouse_pos[0], mouse_pos[1]))
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_d:
                 rocket.mright = False
@@ -62,12 +62,12 @@ def update_bullets(screen, rocket, enemies, walls, bullets, enemybullets, stats)
 def update(bg_color, screen, rocket, walls, bullets, enemybullets, enemies, stats):
     """Screen update"""
     screen.fill(bg_color)
-    f1 = pygame.font.Font(None, 36) #выбор шрифта
+    f1 = pygame.font.Font(None, 36)  # выбор шрифта
     text2 = f1.render(str(stats.score), False, (0, 0, 0))
     update_bullets(screen, rocket, enemies, walls, bullets, enemybullets, stats)
     if pygame.time.get_ticks() % 1000 == 0:
         for i in enemies:
-            enemybullets.add(Bullet(screen, i.rect.centerx, i.rect.centery, rocket.x, rocket.y,0.2))
+            enemybullets.add(Bullet(screen, i.rect.centerx, i.rect.centery, rocket.x, rocket.y))
     for i in walls:
         i.output()
     for i in bullets:
