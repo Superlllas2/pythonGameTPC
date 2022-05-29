@@ -10,8 +10,8 @@ class Wall(Sprite):
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.rect.centerx = self.screen_rect.centerx
-        self.rect.centerx = x
-        self.rect.centery = y
+        self.rect.centerx = x+16
+        self.rect.centery = y+16
 
     def output(self):
         """рисование игрока"""

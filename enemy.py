@@ -10,11 +10,11 @@ class Enemy(Sprite):
         self.image = pygame.image.load('Resources/Pictures/Character/Enemy2.png')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
-        self.rect.centerx = self.x = random.randrange(9, 791)
-        self.rect.centery = self.y = random.randrange(12, 588)
+        self.rect.centerx = self.x = random.randrange(32, screen.get_size()[0])
+        self.rect.centery = self.y = random.randrange(32, screen.get_size()[1])
         while pygame.sprite.spritecollide(self, walls, False) or pygame.sprite.spritecollide(self, enemies, False):
-            self.rect.centerx = self.x = random.randrange(9, 791)
-            self.rect.centery = self.y = random.randrange(12, 588)
+            self.rect.centerx = self.x = random.randrange(32, screen.get_size()[0])
+            self.rect.centery = self.y = random.randrange(32, screen.get_size()[1])
     def output(self):
         """Enemy sprite drawing"""
         self.screen.blit(self.image, self.rect)
