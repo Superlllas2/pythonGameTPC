@@ -16,7 +16,7 @@ class Hp(Sprite):
 
     def output(self, stats):
         """Player output"""
-        self.rect.centerx = 785
+        self.rect.centerx = self.screen.get_size()[0]-15
         self.rect.centery = 15
         for i in range (stats.hp_left):
             self.screen.blit(self.image, self.rect)

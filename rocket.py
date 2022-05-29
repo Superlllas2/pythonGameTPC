@@ -36,13 +36,13 @@ class Rocket(Sprite):
         x = self.x
         y = self.y
         if self.mright and self.rect.right < self.screen_rect.right:
-            self.x += 0.1
+            self.x += 0.5
         if self.mleft and self.rect.left > 0:
-            self.x -= 0.1
+            self.x -= 0.5
         if self.mup and self.rect.top > 0:
-            self.y -= 0.1
+            self.y -= 0.5
         if self.mdown and self.rect.bottom < self.screen_rect.bottom:
-            self.y += 0.1
+            self.y += 0.5
         self.rect.centerx = self.x
         self.rect.centery = self.y
         collisions = pygame.sprite.spritecollide(self, walls, False)
