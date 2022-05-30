@@ -1,11 +1,12 @@
 import random
+from threading import Thread
 
 import pygame, sys
 from bullet import Bullet
 from hp import Hp
 
 
-def events(screen, rocket, bullets):
+def events(screen, rocket, bullets, stats):
     """Parsing pressed key"""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -19,14 +20,25 @@ def events(screen, rocket, bullets):
                 rocket.mdown = True
             elif event.key == pygame.K_w:
                 rocket.mup = True
+            elif event.key == pygame.K_r:
+                t1 = Thread(target=wait, args=("reload", stats))
+                t1.start()
+                sound("reload")
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = pygame.mouse.get_pos()
             h_x, h_y = rocket.get_coor()
-            if len(bullets)<100:
+            if stats.bulletsNum > 0:
+                sound("shooting")
                 if rocket.mright or rocket.mleft or rocket.mdown or rocket.mup:
-                    bullets.add(Bullet(screen, h_x, h_y, (mouse_pos[0] + random.randrange(-30, 30)), (mouse_pos[1] + random.randrange(-30, 30))))
+                    t2 = Thread(target=shooting, args=("shooting", stats))
+                    t2.start()
+                    shooting(True, screen, bullets, h_x, h_y, mouse_pos)
                 else:
-                    bullets.add(Bullet(screen, h_x, h_y, (mouse_pos[0]),(mouse_pos[1])))
+                    t3 = Thread(target=shooting, args=("shooting", stats))
+                    t3.start()
+                    shooting(False, screen, bullets, h_x, h_y, mouse_pos)
+
+                stats.bulletsNum -= 1
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_d:
                 rocket.mright = False
@@ -36,6 +48,36 @@ def events(screen, rocket, bullets):
                 rocket.mdown = False
             elif event.key == pygame.K_w:
                 rocket.mup = False
+
+
+def shooting(running, screen, bullets, h_x, h_y, mouse_pos):
+    if running:
+        bullets.add(Bullet(screen, h_x, h_y, (mouse_pos[0] + random.randrange(-50, 50)),
+                           (mouse_pos[1] + random.randrange(-50, 50))))
+    else:
+        bullets.add(Bullet(screen, h_x, h_y, (mouse_pos[0] + random.randrange(-15, 15)),
+                           (mouse_pos[1] + random.randrange(-15, 15))))
+
+
+def wait(eventHappens, stats):
+    if eventHappens == "reload":
+        pygame.time.wait(3100)
+        stats.bulletsNum = 30
+    elif eventHappens == "shooting":
+        pygame.time.wait(1000)
+
+
+
+def sound(sound):
+    shootingSound = pygame.mixer.Sound('Resources/SFX/gunfiresound.mp3')
+    reloadSound = pygame.mixer.Sound('Resources/SFX/reload.mp3')
+    deadAllien = pygame.mixer.Sound('Resources/SFX/allienIsDead.mp3')
+    if sound == "shooting":
+        shootingSound.play()
+    elif sound == "reload":
+        reloadSound.play()
+    elif sound == "kill":
+        deadAllien.play()
 
 
 def update_bullets(screen, rocket, enemies, walls, bullets, enemybullets, stats):
@@ -59,6 +101,7 @@ def update_bullets(screen, rocket, enemies, walls, bullets, enemybullets, stats)
     collisions = pygame.sprite.groupcollide(bullets, enemies, True, True)
     for i in collisions:
         stats.score += 10
+        sound("kill")
     collisions = pygame.sprite.groupcollide(enemybullets, walls, True, False)
     collisions = pygame.sprite.spritecollide(rocket, enemybullets, True)
     if collisions:
@@ -68,8 +111,9 @@ def update_bullets(screen, rocket, enemies, walls, bullets, enemybullets, stats)
 def update(bg_color, screen, rocket, walls, bullets, enemybullets, enemies, stats):
     """Screen update"""
     screen.fill(bg_color)
-    f1 = pygame.font.Font(None, 36)  # выбор шрифта
+    f1 = pygame.font.Font(None, 36)  # Font set up
     text2 = f1.render(str(stats.score), False, (0, 0, 0))
+    text3 = f1.render(str(stats.bulletsNum), False, (0, 0, 0))
     update_bullets(screen, rocket, enemies, walls, bullets, enemybullets, stats)
     if pygame.time.get_ticks() % 500 == 0:
         for i in enemies:
@@ -86,4 +130,5 @@ def update(bg_color, screen, rocket, walls, bullets, enemybullets, enemies, stat
     hp = Hp(screen)
     hp.output(stats)
     screen.blit(text2, (10, 10))
+    screen.blit(text3, (1890, 1052))
     pygame.display.flip()

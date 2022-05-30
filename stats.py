@@ -1,12 +1,14 @@
-class Stats():
-    """отслеживание статистики"""
+class Stats:
+    """Stats checking"""
 
     def __init__(self):
-        """инициализирует статистику"""
+        """Stats init"""
         self.reset_stats()
         self.run_game = True
 
     def reset_stats(self):
-        """статистика, изменяющаяся во время игры"""
+        """Stats, changing while playing"""
         self.hp_left = 10
-        self.score =0
+        self.score = 0
+        self.bulletsNum = 30
+
