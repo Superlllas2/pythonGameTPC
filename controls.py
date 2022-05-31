@@ -1,7 +1,10 @@
 import random
+import time
 from threading import Thread
 
-import pygame, sys
+import pygame
+import sys
+
 from bullet import Bullet
 from hp import Hp
 
@@ -30,14 +33,11 @@ def events(screen, rocket, bullets, stats):
             if stats.bulletsNum > 0:
                 sound("shooting")
                 if rocket.mright or rocket.mleft or rocket.mdown or rocket.mup:
-                    t2 = Thread(target=shooting, args=("shooting", stats))
-                    t2.start()
+                    tic = time.perf_counter()
+                    toc = time.perf_counter()
                     shooting(True, screen, bullets, h_x, h_y, mouse_pos)
                 else:
-                    t3 = Thread(target=shooting, args=("shooting", stats))
-                    t3.start()
                     shooting(False, screen, bullets, h_x, h_y, mouse_pos)
-
                 stats.bulletsNum -= 1
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_d:
@@ -65,7 +65,6 @@ def wait(eventHappens, stats):
         stats.bulletsNum = 30
     elif eventHappens == "shooting":
         pygame.time.wait(1000)
-
 
 
 def sound(sound):
