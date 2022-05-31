@@ -33,8 +33,6 @@ def events(screen, rocket, bullets, stats):
             if stats.bulletsNum > 0:
                 sound("shooting")
                 if rocket.mright or rocket.mleft or rocket.mdown or rocket.mup:
-                    tic = time.perf_counter()
-                    toc = time.perf_counter()
                     shooting(True, screen, bullets, h_x, h_y, mouse_pos)
                 else:
                     shooting(False, screen, bullets, h_x, h_y, mouse_pos)
