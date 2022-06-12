@@ -24,7 +24,9 @@ def events(screen, rocket, bullets, stats):
             elif event.key == pygame.K_w:
                 rocket.mup = True
             elif event.key == pygame.K_r:
-                t1 = Thread(target=wait, args=("reload", stats))
+                mouse_pos = pygame.mouse.get_pos()
+                h_x, h_y = rocket.get_coor()
+                t1 = Thread(target=wait, args=("reload", stats, True, screen, bullets, h_x, h_y, mouse_pos))
                 t1.start()
                 sound("reload")
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -33,9 +35,11 @@ def events(screen, rocket, bullets, stats):
             if stats.bulletsNum > 0:
                 sound("shooting")
                 if rocket.mright or rocket.mleft or rocket.mdown or rocket.mup:
-                    shooting(True, screen, bullets, h_x, h_y, mouse_pos)
+                    t2 = Thread(target=wait, args=("shooting", stats, True, screen, bullets, h_x, h_y, mouse_pos))
+                    t2.start()
                 else:
-                    shooting(False, screen, bullets, h_x, h_y, mouse_pos)
+                    t3 = Thread(target=wait, args=("shooting", stats, True, screen, bullets, h_x, h_y, mouse_pos))
+                    t3.start()
                 stats.bulletsNum -= 1
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_d:
@@ -57,12 +61,13 @@ def shooting(running, screen, bullets, h_x, h_y, mouse_pos):
                            (mouse_pos[1] + random.randrange(-15, 15))))
 
 
-def wait(eventHappens, stats):
+def wait(eventHappens, stats, running, screen, bullets, h_x, h_y, mouse_pos):
     if eventHappens == "reload":
         pygame.time.wait(3100)
         stats.bulletsNum = 30
     elif eventHappens == "shooting":
-        pygame.time.wait(1000)
+        pygame.time.wait(10)
+        shooting(running, screen, bullets, h_x, h_y, mouse_pos)
 
 
 def sound(sound):

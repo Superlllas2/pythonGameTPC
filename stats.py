@@ -8,7 +8,6 @@ class Stats:
 
     def reset_stats(self):
         """Stats, changing while playing"""
-        self.hp_left = 10
+        self.hp_left = 1000
         self.score = 0
         self.bulletsNum = 30
-
