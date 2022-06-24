@@ -3,18 +3,27 @@ from pygame.sprite import Sprite
 
 
 class Rocket(Sprite):
-
     def __init__(self, screen):
         """Player init"""
         super(Rocket, self).__init__()
 
-        self.sprites = []
-        # self.image = pygame.image.load('Resources/Pictures/Character/rocket2.png')
-        self.sprites.append(pygame.image.load('Resources/Pictures/Character/rocket2.png'))
-        self.sprites.append(pygame.image.load('Resources/Pictures/Character/rocket1.png'))
+        """Animation"""
+        self.is_running = False
         self.current_sprite = 0
-        self.image = self.sprites[self.current_sprite]
 
+        self.spritesR = []
+        self.spritesR.append(pygame.image.load('Resources/Pictures/Character/LookingRight/RocketLookingRight.png'))
+        self.spritesR.append(pygame.image.load('Resources/Pictures/Character/LookingRight/RocketLookingRight1.png'))
+        self.spritesR.append(pygame.image.load('Resources/Pictures/Character/LookingRight/RocketLookingRight2.png'))
+        self.spritesR.append(pygame.image.load('Resources/Pictures/Character/LookingRight/RocketLookingRight3.png'))
+
+        self.spritesL = []
+        self.spritesL.append(pygame.image.load('Resources/Pictures/Character/LookingLeft/RocketLookingLeft.png'))
+        self.spritesL.append(pygame.image.load('Resources/Pictures/Character/LookingLeft/RocketLookingLeft1.png'))
+        self.spritesL.append(pygame.image.load('Resources/Pictures/Character/LookingLeft/RocketLookingLeft2.png'))
+        self.spritesL.append(pygame.image.load('Resources/Pictures/Character/LookingLeft/RocketLookingLeft3.png'))
+
+        self.image = self.spritesR[self.current_sprite]
 
         self.screen = screen
         self.rect = self.image.get_rect()
@@ -36,13 +45,13 @@ class Rocket(Sprite):
         x = self.x
         y = self.y
         if self.mright and self.rect.right < self.screen_rect.right:
-            self.x += 0.5
+            self.x += 1
         if self.mleft and self.rect.left > 0:
-            self.x -= 0.5
+            self.x -= 1
         if self.mup and self.rect.top > 0:
-            self.y -= 0.5
+            self.y -= 1
         if self.mdown and self.rect.bottom < self.screen_rect.bottom:
-            self.y += 0.5
+            self.y += 1
         self.rect.centerx = self.x
         self.rect.centery = self.y
         collisions = pygame.sprite.spritecollide(self, walls, False)
@@ -60,8 +69,37 @@ class Rocket(Sprite):
             stats.hp_left -= 1
 
         """Player animation"""
-        # self.current_sprite += 1
-        # self.image = self.sprites[self.current_sprite]
+        if self.is_running:
+            # Part of code to make an animation for a running character
+            # Right now is just the same as if he stands still
+            if pygame.mouse.get_pos()[0] > x:
+                self.image = self.spritesR[int(self.current_sprite)]
+                self.current_sprite += 0.04
+                if self.current_sprite >= len(self.spritesR):
+                    self.current_sprite = 0
+                self.image = self.spritesR[int(self.current_sprite)]
+            else:
+                self.image = self.spritesL[int(self.current_sprite)]
+                self.current_sprite += 0.04
+                if self.current_sprite >= len(self.spritesL):
+                    self.current_sprite = 0
+                self.image = self.spritesL[int(self.current_sprite)]
+        else:
+            if pygame.mouse.get_pos()[0] > x:
+                self.image = self.spritesR[int(self.current_sprite)]
+                self.current_sprite += 0.04
+                if self.current_sprite >= len(self.spritesR):
+                    self.current_sprite = 0
+                self.image = self.spritesR[int(self.current_sprite)]
+            else:
+                self.image = self.spritesL[int(self.current_sprite)]
+                self.current_sprite += 0.04
+                if self.current_sprite >= len(self.spritesL):
+                    self.current_sprite = 0
+                self.image = self.spritesL[int(self.current_sprite)]
+
+    def animate_run(self):
+        self.is_running = True
 
     def create_rocket(self):
         """Player position"""

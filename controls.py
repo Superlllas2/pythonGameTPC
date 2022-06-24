@@ -1,5 +1,4 @@
 import random
-import time
 from threading import Thread
 
 import pygame
@@ -16,12 +15,16 @@ def events(screen, rocket, bullets, stats):
             sys.exit()
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_d:
+                rocket.is_running = True
                 rocket.mright = True
             elif event.key == pygame.K_a:
+                rocket.is_running = True
                 rocket.mleft = True
             elif event.key == pygame.K_s:
+                rocket.is_running = True
                 rocket.mdown = True
             elif event.key == pygame.K_w:
+                rocket.is_running = True
                 rocket.mup = True
             elif event.key == pygame.K_r:
                 mouse_pos = pygame.mouse.get_pos()
@@ -43,12 +46,16 @@ def events(screen, rocket, bullets, stats):
                 stats.bulletsNum -= 1
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_d:
+                rocket.is_running = False
                 rocket.mright = False
             elif event.key == pygame.K_a:
+                rocket.is_running = False
                 rocket.mleft = False
             elif event.key == pygame.K_s:
+                rocket.is_running = False
                 rocket.mdown = False
             elif event.key == pygame.K_w:
+                rocket.is_running = False
                 rocket.mup = False
 
 
@@ -132,5 +139,5 @@ def update(bg_color, screen, rocket, walls, bullets, enemybullets, enemies, stat
     hp = Hp(screen)
     hp.output(stats)
     screen.blit(text2, (10, 10))
-    screen.blit(text3, (1890, 1052))
+    screen.blit(text3, (screen.get_size()[0] - len(str(stats.bulletsNum)) * 18 + 5, screen.get_size()[1] - 26))
     pygame.display.flip()

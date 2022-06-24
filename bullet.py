@@ -8,13 +8,13 @@ class Bullet(Sprite):
         """Bullet init"""
         super(Bullet, self).__init__()
         self.screen = screen
-        self.image = pygame.image.load('Resources/Pictures/Character/Bullet4.png')
+        self.image = pygame.image.load('Resources/Pictures/Character/Bullet3.png')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.rect.centerx = h_x
         self.rect.centery = h_y-32
         self.x = h_x
-        self.y = h_y-32
+        self.y = h_y
         d = sqrt((h_x - m_x) ** 2 + (h_y-32 - m_y) ** 2)
         self.d_y = 1 / d * (h_y-32 - m_y)    # coordinates change
         self.d_x = 1 / d * (h_x - m_x)

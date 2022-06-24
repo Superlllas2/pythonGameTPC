@@ -21,12 +21,12 @@ def create_walls(screen):
 
 def run():
     pygame.init()
-    screen = pygame.display.set_mode(size=(0, 0), flags=0, depth=0, display=0, vsync=0)
+    screen = pygame.display.set_mode(size=(0, 0))
     pygame.display.set_caption("Game")
     wasted = Sprite()
     wasted.image = pygame.image.load('Resources/Pictures/Character/wasted.png')
     wasted.screen = screen
-    bg_color = (100, 100, 200)
+    bg_color = (200, 200, 230)
     rocket = Rocket(screen)
     rocket.create_rocket()
     bullets = Group()
