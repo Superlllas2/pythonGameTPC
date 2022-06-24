@@ -139,5 +139,5 @@ def update(bg_color, screen, rocket, walls, bullets, enemybullets, enemies, stat
     hp = Hp(screen)
     hp.output(stats)
     screen.blit(text2, (10, 10))
-    screen.blit(text3, (screen.get_size()[0] - len(str(stats.bulletsNum)) * 18 + 5, screen.get_size()[1] - 26))
+    screen.blit(text3, (screen.get_size()[0] - len(str(stats.bulletsNum)) * 18 - 45, screen.get_size()[1] - 65))
     pygame.display.flip()
